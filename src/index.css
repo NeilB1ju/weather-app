@@ -2,4 +2,74 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Antic Slab', serif;
+}
+
+:root {
+  --header: #1e212d;
+  --body: #6870e0;
+  --primary-font: #acb4f4;
+  --secondary-font: #faf3e0;
+  --input-background: #acb4f4;
+}
+
+/* Styling the Header */
+
+.header-container {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--header);
+  color: var(--primary-font);
+}
+
+.header-container > img {
+  width: 70px;
+  height: 70px;
+  filter: invert(100%) sepia(38%) saturate(1615%) hue-rotate(309deg)
+    brightness(106%) contrast(97%);
+}
+
+.header-container > h1 {
+  font-size: 48px;
+}
+
+/* Styling the main body */
+
+main {
+  height: calc(100vh - 120px);
+  background-color: var(--body);
+}
+
+.input-container {
+  padding-top: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.input-container > input {
+  height: 2.5rem;
+  font-size: 1.3rem;
+  outline: none;
+  border: none;
+  padding: 5px;
+  background-color: var(--input-background);
+  border-radius: 10px;
+}
+
+.input-container > button {
+  height: 2.5rem;
+  width: 5rem;
+  border-radius: 10px;
+  background-color: var(--header);
+  color: var(--secondary-font);
+  border: none;
+  outline: none;
+  font-size: 1.3rem;
 }
