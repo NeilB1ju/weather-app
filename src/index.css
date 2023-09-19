@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Antic+Slab&family=Arimo:wght@500&family=Baumans&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -58,7 +60,7 @@ main {
   font-size: 1.3rem;
   outline: none;
   border: none;
-  padding: 5px;
+  padding: 10px;
   background-color: var(--input-background);
   border-radius: 10px;
 }
@@ -72,4 +74,9 @@ main {
   border: none;
   outline: none;
   font-size: 1.3rem;
+}
+
+.input-container > button:hover {
+  cursor: pointer;
+  filter: brightness(85%);
 }
