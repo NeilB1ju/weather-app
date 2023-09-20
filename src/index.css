@@ -80,3 +80,13 @@ main {
   cursor: pointer;
   filter: brightness(85%);
 }
+
+/* Styling the weather card */
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}

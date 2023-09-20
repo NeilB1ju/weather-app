@@ -3,24 +3,33 @@ import WeatherCard from './WeatherCard';
 
 function Main() {
   const [location, setLocation] = useState('');
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleInput = (e) => {
     setLocation(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  //Value of setForm gets set to false by the end of the function call. So it is never true and hence the component does not get rendered.
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (location != '') {
-      <WeatherCard location={location} />;
-    } else {
-      return <h1>Invalid Location</h1>;
+    e.currentTarget.reset();
+    setFormSubmitted(true);
+    if (location) {
+      await APICall(location);
     }
-    // const formData = new FormData(e.currentTarget);
-    // const location = formData.get('location');
-    // if (location != '') {
-    //   e.currentTarget.reset();
-    // }
+    setLocation('');
+    setFormSubmitted(false);
   };
+
+  async function APICall(location) {
+    const API_KEY = '86452b43cad1490a8dc192417230709';
+    const baseURL = 'http://api.weatherapi.com/v1';
+
+    const url = `${baseURL}/current.json?key=${API_KEY}&q=${location}`;
+    const call = await fetch(url);
+    const data = await call.json();
+    console.log(data);
+  }
 
   return (
     <main>
@@ -34,6 +43,7 @@ function Main() {
         />
         <button type="submit">Search</button>
       </form>
+      {formSubmitted ? <WeatherCard location={location} /> : null}
     </main>
   );
 }
