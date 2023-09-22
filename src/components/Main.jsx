@@ -3,23 +3,20 @@ import WeatherCard from './WeatherCard';
 
 function Main() {
   const [location, setLocation] = useState('');
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
-  const handleInput = (e) => {
+  function handleInput(e) {
     setLocation(e.target.value);
-  };
+  }
 
-  //Value of setForm gets set to false by the end of the function call. So it is never true and hence the component does not get rendered.
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.currentTarget.reset();
-    setFormSubmitted(true);
-    if (location) {
-      await APICall(location);
-    }
+  function handleClick() {
+    setLoaded(false);
+    const currentLocation = location;
     setLocation('');
-    setFormSubmitted(false);
-  };
+    APICall(currentLocation);
+  }
 
   async function APICall(location) {
     const API_KEY = '86452b43cad1490a8dc192417230709';
@@ -29,21 +26,44 @@ function Main() {
     const call = await fetch(url);
     const data = await call.json();
     console.log(data);
+    if (data.location) {
+      setData(data);
+    } else {
+      setError(true);
+    }
+    setLoaded(true);
   }
 
   return (
     <main>
-      <form className="input-container" onSubmit={handleSubmit}>
+      <div className="input-container">
         <input
           type="text"
           placeholder="Enter city name"
-          value={location}
-          onChange={handleInput}
           name="location"
+          onChange={handleInput}
+          value={location}
         />
-        <button type="submit">Search</button>
-      </form>
-      {formSubmitted ? <WeatherCard location={location} /> : null}
+        <button type="submit" onClick={handleClick}>
+          Search
+        </button>
+      </div>
+      {data && loaded && (
+        <WeatherCard
+          location={data.location.name}
+          temperature={data.current.temp_c}
+          feelsLikeTemperature={data.current.feelslike_c}
+          humidity={data.current.humidity}
+          windSpeed={data.current.wind_kph}
+        />
+      )}
+      {!data && loaded && error && (
+        <div className="container">
+          <div className="card-container">
+            <h1 className="card-content">Location not found</h1>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
