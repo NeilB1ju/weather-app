@@ -25,7 +25,6 @@ function Main() {
     const url = `${baseURL}/current.json?key=${API_KEY}&q=${location}`;
     const call = await fetch(url);
     const data = await call.json();
-    console.log(data);
     if (data.location) {
       setData(data);
     } else {
