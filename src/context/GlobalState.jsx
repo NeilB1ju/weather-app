@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useReducer } from 'react';
+import { createContext, useReducer, useEffect } from 'react';
 import AppReducer from './AppReducer';
 
 const initialState = {
@@ -9,6 +9,27 @@ const initialState = {
 export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ children }) => {
+  useEffect(() => {
+    let storedFavorites = localStorage.getItem('favorites');
+    storedFavorites = JSON.parse(storedFavorites);
+    if (storedFavorites && storedFavorites.length != 0) {
+      for (let i = 0; i < storedFavorites.length; i++) {
+          addFavorite(storedFavorites[i]);
+        }
+      }
+    }, []);
+
+  // const callLocalStorage = () => {
+  //   let storedFavorites = localStorage.getItem('favorites');
+  //   storedFavorites = JSON.parse(storedFavorites);
+  //   if (storedFavorites && storedFavorites.length != 0) {
+  //     for (let i = 0; i < storedFavorites.length; i++) {
+  //       addFavorite(storedFavorites[i]);
+  //     }
+  //   }
+  // };
+  // callLocalStorage();
+
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   function deleteFavorite(location) {

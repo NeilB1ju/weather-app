@@ -14,6 +14,12 @@ export default (state, action) => {
         favorites: [action.payload, ...state.favorites],
       };
 
+    case 'ADD_FAVORITES':
+      return {
+        ...state,
+        favorites: action.payload,
+      };
+
     default:
       return state;
   }

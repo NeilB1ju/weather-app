@@ -27,12 +27,33 @@ function WeatherCard({
     const doesObjectExist = favorites.some((obj) => obj.location === location);
     if (!doesObjectExist) {
       addFavorite(locationObject);
+
+      //Pushing the new item into local storage
+      let storedFavorites = localStorage.getItem('favorites');
+      storedFavorites = JSON.parse(storedFavorites);
+      storedFavorites.push(locationObject);
+      localStorage.setItem('favorites', JSON.stringify(storedFavorites));
     } else {
       deleteFavorite(location);
+
+      //Removing the item from local storage
+      let storedFavorites = localStorage.getItem('favorites');
+      storedFavorites = JSON.parse(storedFavorites);
+      storedFavorites = storedFavorites.filter(
+        (favorite) => favorite.location != location
+      );
+      localStorage.setItem('favorites', JSON.stringify(storedFavorites));
     }
   };
 
   useEffect(() => {
+    //Pushing an empty array into local storage
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites == null) {
+      localStorage.setItem('favorites', JSON.stringify([]));
+    }
+
+    //Used to check if the card being generated is of a favorited location or not
     const doesObjectExist = favorites.some((obj) => obj.location === location);
     if (doesObjectExist) {
       setFavorite(true);
