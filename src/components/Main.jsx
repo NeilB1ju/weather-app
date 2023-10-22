@@ -29,6 +29,7 @@ function Main() {
       setData(data);
     } else {
       setError(true);
+      setData(null);
     }
     setLoaded(true);
   }
